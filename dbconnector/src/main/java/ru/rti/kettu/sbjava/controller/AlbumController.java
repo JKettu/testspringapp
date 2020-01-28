@@ -31,8 +31,8 @@ public class AlbumController {
     @GetMapping(path = "/deleteAlbum")
     public boolean deleteAlbum(Long id) {
         if (isEmpty(id)) {
-            return musicService.deleteAlbumInfo(id);
-        } else return musicService.deleteAllAlbumInfo();
+            return musicService.deleteAllAlbumInfo();
+        } else return musicService.deleteAlbumInfo(id);
     }
 
     @GetMapping(path = "/getAlbum")
