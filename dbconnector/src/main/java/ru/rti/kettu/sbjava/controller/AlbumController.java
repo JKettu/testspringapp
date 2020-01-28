@@ -1,10 +1,9 @@
 package ru.rti.kettu.sbjava.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.rti.kettu.sbjava.model.Album;
+import ru.rti.kettu.sbjava.model.db.h2.Album;
 import ru.rti.kettu.sbjava.service.MusicService;
 
 import java.util.Arrays;

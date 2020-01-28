@@ -3,9 +3,8 @@ package ru.rti.kettu.sbjava.repository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.rti.kettu.sbjava.model.Album;
+import ru.rti.kettu.sbjava.model.db.h2.Album;
 
 import java.io.Serializable;
 import java.util.List;

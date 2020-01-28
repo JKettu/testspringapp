@@ -1,17 +1,15 @@
 package ru.rti.kettu.sbjava.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.rti.kettu.sbjava.model.Song;
+import ru.rti.kettu.sbjava.model.db.mongoDb.Song;
 import ru.rti.kettu.sbjava.service.MusicService;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.util.StringUtils.isEmpty;
-
 
 @RestController
 @RequestMapping(path = "/song")

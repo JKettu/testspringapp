@@ -1,12 +1,12 @@
 package ru.rti.kettu.sbjava.endpoint.soap;
 
-import musicendpoint.GetAlbumRequest;
-import musicendpoint.GetAlbumResponse;
+import musicendpoint.*;
+import org.hibernate.sql.Update;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import ru.rti.kettu.sbjava.model.Album;
+import ru.rti.kettu.sbjava.model.db.h2.Album;
 import ru.rti.kettu.sbjava.service.MusicService;
 
 import java.util.ArrayList;
@@ -40,6 +40,30 @@ public class MusicEndpoint {
             });
             response.getAlbum().addAll(albums);
         }
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "createAlbumRequest")
+    @ResponsePayload
+    public CreateAlbumResponse createAlbum(@RequestPayload CreateAlbumRequest request) {
+        CreateAlbumResponse response = new CreateAlbumResponse();
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "updateAlbumRequest")
+    @ResponsePayload
+    public UpdateAlbumResponse updateAlbum(@RequestPayload UpdateAlbumRequest request) {
+        UpdateAlbumResponse response = new UpdateAlbumResponse();
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteAlbumRequest")
+    @ResponsePayload
+    public DeleteAlbumResponse deleteAlbum(@RequestPayload DeleteAlbumRequest request) {
+        DeleteAlbumResponse response = new DeleteAlbumResponse();
+
         return response;
     }
 }

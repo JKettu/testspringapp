@@ -2,8 +2,8 @@ package ru.rti.kettu.sbjava.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.rti.kettu.sbjava.model.Album;
-import ru.rti.kettu.sbjava.model.Song;
+import ru.rti.kettu.sbjava.model.db.h2.Album;
+import ru.rti.kettu.sbjava.model.db.mongoDb.Song;
 import ru.rti.kettu.sbjava.repository.AlbumRepository;
 import ru.rti.kettu.sbjava.repository.SongRepository;
 

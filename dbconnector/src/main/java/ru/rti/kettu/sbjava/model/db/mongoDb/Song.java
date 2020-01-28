@@ -1,10 +1,9 @@
-package ru.rti.kettu.sbjava.model;
+package ru.rti.kettu.sbjava.model.db.mongoDb;
 
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Document

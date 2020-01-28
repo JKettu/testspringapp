@@ -1,4 +1,4 @@
-package ru.rti.kettu.sbjava.model;
+package ru.rti.kettu.sbjava.model.db.h2;
 
 import javax.persistence.*;
 import java.io.Serializable;
