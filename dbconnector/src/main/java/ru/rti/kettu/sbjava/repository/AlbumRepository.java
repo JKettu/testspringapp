@@ -5,9 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.rti.kettu.sbjava.model.Album;
-import ru.rti.kettu.sbjava.service.Service;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,8 +13,11 @@ import java.util.List;
 @Repository
 public class AlbumRepository {
 
-    @Autowired
-    SessionFactory sessionFactory;
+    final SessionFactory sessionFactory;
+
+    public AlbumRepository(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     public Album getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
@@ -29,10 +30,10 @@ public class AlbumRepository {
         return query.getResultList();
     }
 
-    public Serializable createAlbum(Album album) {
+    public String createAlbum(Album album) {
         Session session = sessionFactory.getCurrentSession();
         Serializable id = session.save(album);
-        return id;
+        return String.valueOf(id);
     }
 
     public void deleteAlbum(Long id) {

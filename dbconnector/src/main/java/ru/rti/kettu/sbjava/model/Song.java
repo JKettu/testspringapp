@@ -11,7 +11,6 @@ import javax.persistence.Id;
 public class Song {
 
     @Id
-    @GeneratedValue
     private String id;
     @Column(length = 50)
     private String name;

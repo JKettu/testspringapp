@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Album implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(updatable = false, nullable = false)
     private Long id;
     @Column(length = 50)
