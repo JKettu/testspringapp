@@ -1,4 +1,4 @@
-package ru.rti.kettu.sbjava.soap.mapping;
+package ru.rti.kettu.sbjava.mapping.soap;
 
 import musicendpoint.Album;
 

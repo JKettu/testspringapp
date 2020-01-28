@@ -1,4 +1,4 @@
-package ru.rti.kettu.sbjava.endpoint;
+package ru.rti.kettu.sbjava.endpoint.soap;
 
 import musicendpoint.GetAlbumRequest;
 import musicendpoint.GetAlbumResponse;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
-import static ru.rti.kettu.sbjava.soap.mapping.AlbumMapping.mapResponse;
+import static ru.rti.kettu.sbjava.mapping.soap.AlbumMapping.mapResponse;
 
 @Endpoint
 public class MusicEndpoint {
