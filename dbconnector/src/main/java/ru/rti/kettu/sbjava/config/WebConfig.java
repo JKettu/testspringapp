@@ -30,7 +30,7 @@ public class WebConfig extends WsConfigurerAdapter {
         DefaultWsdl11Definition definition = new DefaultWsdl11Definition();
         definition.setPortTypeName("MusicWebService");
         definition.setLocationUri("/ws");
-        definition.setTargetNamespace("musicEndpoint");
+        definition.setTargetNamespace("albumEndpoint");
         definition.setSchema(musicSchema);
         return definition;
     }

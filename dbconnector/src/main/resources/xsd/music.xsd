@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="musicEndpoint"
-           targetNamespace="musicEndpoint" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="albumEndpoint"
+           targetNamespace="albumEndpoint" elementFormDefault="qualified">
 
     <xs:element name="getAlbumRequest">
         <xs:complexType>
@@ -49,10 +49,7 @@
 	<xs:element name="updateAlbumRequest">
         <xs:complexType>
             <xs:sequence>
-				<xs:element name="id" type="xs:long" minOccurs="1"/>
-                <xs:element name="name" type="xs:string" minOccurs="0"/>
-				<xs:element name="author" type="xs:string" minOccurs="0"/>
-				<xs:element name="year" type="xs:int" minOccurs="0"/>
+                <xs:element name="album" type="tns:album" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -66,7 +63,7 @@
 
     <xs:complexType name="album">
         <xs:sequence>
-            <xs:element name="id" type="xs:long" minOccurs="1"/>
+            <xs:element name="id" type="xs:long"/>
             <xs:element name="name" type="xs:string" minOccurs="0"/>
             <xs:element name="author" type="xs:string" minOccurs="0"/>
             <xs:element name="year" type="xs:int" minOccurs="0"/>

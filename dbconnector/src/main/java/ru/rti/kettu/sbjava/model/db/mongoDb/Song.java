@@ -1,11 +1,17 @@
 package ru.rti.kettu.sbjava.model.db.mongoDb;
 
 
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Document
 public class Song {
 
@@ -14,28 +20,4 @@ public class Song {
     @Column(length = 50)
     private String name;
     private Long albumId;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getAlbumId() {
-        return albumId;
-    }
-
-    public void setAlbumId(Long albumId) {
-        this.albumId = albumId;
-    }
 }

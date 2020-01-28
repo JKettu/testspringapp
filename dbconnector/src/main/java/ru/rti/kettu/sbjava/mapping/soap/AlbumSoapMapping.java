@@ -1,15 +1,15 @@
 package ru.rti.kettu.sbjava.mapping.soap;
 
-import musicendpoint.Album;
+import albumendpoint.Album;
 
-final public class AlbumMapping {
+final public class AlbumSoapMapping {
 
-    private AlbumMapping() {
+    private AlbumSoapMapping() {
     }
 
-    public static Album mapResponse(ru.rti.kettu.sbjava.model.db.h2.Album albumModel) {
+    public static Album mapSoapResponse(ru.rti.kettu.sbjava.model.db.h2.Album albumModel) {
         Album albumResponse = new Album();
-        if (albumModel == null) return albumResponse;
+        if (albumModel == null) return null;
         albumResponse.setId(albumModel.getId());
         albumResponse.setAuthor(albumModel.getAuthor());
         albumResponse.setName(albumModel.getName());
@@ -17,7 +17,7 @@ final public class AlbumMapping {
         return albumResponse;
     }
 
-    public static ru.rti.kettu.sbjava.model.db.h2.Album mapRequest(Album albumRequest) {
+    public static ru.rti.kettu.sbjava.model.db.h2.Album mapSoapRequest(Album albumRequest) {
         ru.rti.kettu.sbjava.model.db.h2.Album albumModel = new ru.rti.kettu.sbjava.model.db.h2.Album();
         if (albumRequest == null) return albumModel;
         albumModel.setId(albumRequest.getId());
@@ -27,5 +27,12 @@ final public class AlbumMapping {
         return albumModel;
     }
 
-
+    public static ru.rti.kettu.sbjava.model.db.h2.Album mapSoapRequest(Long id, String author, String name, int year) {
+        ru.rti.kettu.sbjava.model.db.h2.Album albumModel = new ru.rti.kettu.sbjava.model.db.h2.Album();
+        albumModel.setId(id);
+        albumModel.setAuthor(author);
+        albumModel.setName(name);
+        albumModel.setYear(year);
+        return albumModel;
+    }
 }

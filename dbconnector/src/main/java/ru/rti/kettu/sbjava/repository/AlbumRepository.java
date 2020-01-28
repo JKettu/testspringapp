@@ -41,6 +41,12 @@ public class AlbumRepository {
         session.delete(album);
     }
 
+    public void deleteAllAlbums() {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("delete from Album");
+        query.executeUpdate();
+    }
+
     public Album updateAlbum(Album album) {
         Session session = sessionFactory.getCurrentSession();
         session.update(album);

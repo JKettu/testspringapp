@@ -1,7 +1,7 @@
 package ru.rti.kettu.sbjava.endpoint.soap;
 
-import musicendpoint.*;
-import org.hibernate.sql.Update;
+import albumendpoint.*;
+import org.springframework.util.ObjectUtils;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -13,15 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
-import static ru.rti.kettu.sbjava.mapping.soap.AlbumMapping.mapResponse;
+import static ru.rti.kettu.sbjava.mapping.soap.AlbumSoapMapping.mapSoapRequest;
+import static ru.rti.kettu.sbjava.mapping.soap.AlbumSoapMapping.mapSoapResponse;
 
 @Endpoint
-public class MusicEndpoint {
-    private static final String NAMESPACE_URI = "musicEndpoint";
+public class AlbumEndpoint {
+    private static final String NAMESPACE_URI = "albumEndpoint";
 
     final MusicService musicService;
 
-    public MusicEndpoint(MusicService musicService) {
+    public AlbumEndpoint(MusicService musicService) {
         this.musicService = musicService;
     }
 
@@ -30,13 +31,13 @@ public class MusicEndpoint {
     public GetAlbumResponse getAlbum(@RequestPayload GetAlbumRequest request) {
         GetAlbumResponse response = new GetAlbumResponse();
         if (request.getId() != null)
-            response.getAlbum().add(mapResponse(musicService.getAlbumById(request.getId())));
+            response.getAlbum().add(mapSoapResponse(musicService.getAlbumById(request.getId())));
         else {
             List<Album> albumsListModel = musicService.getAllAlbums();
-            if (isEmpty(albumsListModel)) return new GetAlbumResponse();
-            List<musicendpoint.Album> albums = new ArrayList<>();
-            albumsListModel.forEach( album -> {
-                albums.add(mapResponse(album));
+            if (isEmpty(albumsListModel)) return null;
+            List<albumendpoint.Album> albums = new ArrayList<>();
+            albumsListModel.forEach(album -> {
+                albums.add(mapSoapResponse(album));
             });
             response.getAlbum().addAll(albums);
         }
@@ -47,15 +48,23 @@ public class MusicEndpoint {
     @ResponsePayload
     public CreateAlbumResponse createAlbum(@RequestPayload CreateAlbumRequest request) {
         CreateAlbumResponse response = new CreateAlbumResponse();
-
-        return response;
+        Album albumModel = mapSoapRequest(null, request.getAuthor(), request.getName(), request.getYear());
+        String albumId = musicService.createAlbumInfo(albumModel);
+        try {
+            albumendpoint.Album album = mapSoapResponse(musicService.getAlbumById(Long.parseLong(albumId)));
+            response.setAlbum(album);
+            return response;
+        } catch (NumberFormatException exception) {
+            return null;
+        }
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "updateAlbumRequest")
     @ResponsePayload
     public UpdateAlbumResponse updateAlbum(@RequestPayload UpdateAlbumRequest request) {
         UpdateAlbumResponse response = new UpdateAlbumResponse();
-
+        Album albumModel = mapSoapRequest(request.getAlbum());
+        response.setAlbum(mapSoapResponse(musicService.updateAlbum(albumModel)));
         return response;
     }
 
@@ -63,7 +72,9 @@ public class MusicEndpoint {
     @ResponsePayload
     public DeleteAlbumResponse deleteAlbum(@RequestPayload DeleteAlbumRequest request) {
         DeleteAlbumResponse response = new DeleteAlbumResponse();
-
+        if (ObjectUtils.isEmpty(request.getId()))
+            response.setResult(musicService.deleteAlbumInfo(request.getId()));
+        else response.setResult(musicService.deleteAllAlbumInfo());
         return response;
     }
 }

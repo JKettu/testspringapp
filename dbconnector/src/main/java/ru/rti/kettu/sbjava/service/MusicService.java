@@ -24,49 +24,59 @@ public class MusicService {
     }
 
     @Transactional
-    public String createAlbumInfo (String author, String name, int year) {
-        Album album = new Album();
-        album.setAuthor(author);
-        album.setName(name);
-        album.setYear(year);
+    public String createAlbumInfo(Album album) {
+        if (album == null) return "";
+        album.setAuthor(album.getAuthor());
+        album.setName(album.getName());
+        album.setYear(album.getYear());
         return albumRepository.createAlbum(album);
     }
 
     @Transactional
-    public void deleteAlbumInfo (Long id) {
-        albumRepository.deleteAlbum(id);
+    public boolean deleteAlbumInfo(Long id) {
+        if (id == null) return false;
+        try {
+            albumRepository.deleteAlbum(id);
+            return true;
+        } catch (RuntimeException exception) {
+            return false;
+        }
     }
 
     @Transactional
-    public Album getAlbumById (Long id) {
+    public boolean deleteAllAlbumInfo() {
+        try {
+            albumRepository.deleteAllAlbums();
+            return true;
+        } catch (RuntimeException exception) {
+            return false;
+        }
+    }
+
+    @Transactional
+    public Album getAlbumById(Long id) {
         return albumRepository.getById(id);
     }
 
     @Transactional
-    public List<Album> getAllAlbums () {
+    public List<Album> getAllAlbums() {
         return albumRepository.getAllAlbums();
     }
 
     @Transactional
-    public Album updateAlbum(Long id, String name, String author, int year) {
-        Album album = albumRepository.getById(id);
-        if (isNotEmpty(name))
-            album.setName(name);
-        if (isNotEmpty(author))
-            album.setAuthor(author);
-        if (year!= 0)
-            album.setYear(year);
-        return albumRepository.updateAlbum(album);
-    }
-
-    @Transactional
     public Album updateAlbum(Album album) {
-        if (album == null) return null;
+        if (album == null || album.getId() == null) return null;
+        if (isNotEmpty(album.getName()))
+            album.setName(album.getName());
+        if (isNotEmpty(album.getAuthor()))
+            album.setAuthor(album.getAuthor());
+        if (album.getYear() != 0)
+            album.setYear(album.getYear());
         return albumRepository.updateAlbum(album);
     }
 
     @Transactional
-    public Song createSongInfo (String name, Long albumId) {
+    public Song createSongInfo(String name, Long albumId) {
         Song song = new Song();
         song.setName(name);
         song.setAlbumId(albumId);
@@ -74,7 +84,7 @@ public class MusicService {
     }
 
     @Transactional
-    public void deleteSongInfo (String id) {
+    public void deleteSongInfo(String id) {
         songRepository.deleteById(id);
     }
 
@@ -85,7 +95,7 @@ public class MusicService {
 
     @Transactional
     public List<Song> getAllSongs() {
-        return (List<Song>)songRepository.findAll();
+        return (List<Song>) songRepository.findAll();
     }
 
     @Transactional
