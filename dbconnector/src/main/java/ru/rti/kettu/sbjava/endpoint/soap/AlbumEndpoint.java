@@ -73,8 +73,8 @@ public class AlbumEndpoint {
     public DeleteAlbumResponse deleteAlbum(@RequestPayload DeleteAlbumRequest request) {
         DeleteAlbumResponse response = new DeleteAlbumResponse();
         if (ObjectUtils.isEmpty(request.getId()))
-            response.setResult(musicService.deleteAlbumInfo(request.getId()));
-        else response.setResult(musicService.deleteAllAlbumInfo());
+            response.setResult(musicService.deleteAllAlbumInfo());
+        else response.setResult(musicService.deleteAlbumInfo(request.getId()));
         return response;
     }
 }
