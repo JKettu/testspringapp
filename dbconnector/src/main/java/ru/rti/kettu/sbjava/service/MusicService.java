@@ -66,13 +66,14 @@ public class MusicService {
     @Transactional
     public Album updateAlbum(Album album) {
         if (album == null || album.getId() == null) return null;
+        Album albumToUpdate = getAlbumById(album.getId());
         if (isNotEmpty(album.getName()))
-            album.setName(album.getName());
+            albumToUpdate.setName(album.getName());
         if (isNotEmpty(album.getAuthor()))
-            album.setAuthor(album.getAuthor());
-        if (album.getYear() != 0)
-            album.setYear(album.getYear());
-        return albumRepository.updateAlbum(album);
+            albumToUpdate.setAuthor(album.getAuthor());
+        if (album.getYear() != null)
+            albumToUpdate.setYear(album.getYear());
+        return albumRepository.updateAlbum(albumToUpdate);
     }
 
     @Transactional

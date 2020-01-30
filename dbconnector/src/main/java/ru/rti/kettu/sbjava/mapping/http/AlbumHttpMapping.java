@@ -8,7 +8,7 @@ final public class AlbumHttpMapping {
     private AlbumHttpMapping() {
     }
 
-    public static Album mapHttpRequest(Long id, String name, String author, int year) {
+    public static Album mapHttpRequest(Long id, String name, String author, Integer year) {
         Album albumModel = new Album();
         albumModel.setId(id);
         albumModel.setAuthor(author);

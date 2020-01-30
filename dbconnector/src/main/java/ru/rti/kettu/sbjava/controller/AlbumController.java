@@ -1,8 +1,6 @@
 package ru.rti.kettu.sbjava.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.rti.kettu.sbjava.model.db.h2.Album;
 import ru.rti.kettu.sbjava.service.MusicService;
 
@@ -22,28 +20,31 @@ public class AlbumController {
         this.musicService = musicService;
     }
 
-    @GetMapping(path = "/createAlbum")
-    public String createAlbum(String author, String name, int year) {
-        Album album = mapHttpRequest(null, author, name, year);
+    @PostMapping(path = "/createAlbum")
+    public String createAlbum(@RequestParam(required = false) String author,
+                              @RequestParam(required = false) String name, @RequestParam(required = false) Integer year) {
+        Album album = mapHttpRequest(null, name, author , year);
         return "New album was created with id: " + musicService.createAlbumInfo(album);
     }
 
-    @GetMapping(path = "/deleteAlbum")
-    public boolean deleteAlbum(Long id) {
+    @PostMapping(path = "/deleteAlbum")
+    public boolean deleteAlbum(@RequestParam(required = false) Long id) {
         if (isEmpty(id)) {
             return musicService.deleteAllAlbumInfo();
         } else return musicService.deleteAlbumInfo(id);
     }
 
-    @GetMapping(path = "/getAlbum")
-    public List<Album> getAllAlbums(Long id) {
+    @PostMapping(path = "/getAlbum")
+    public List<Album> getAllAlbums(@RequestParam (required = false) Long id) {
         if (isEmpty(id))
             return musicService.getAllAlbums();
         else return Arrays.asList(musicService.getAlbumById(id));
     }
 
-    @GetMapping(path = "/updateAlbum")
-    public Album updateAlbum(Long id, String author, String name, int year) {
+    @PostMapping(path = "/updateAlbum")
+    public Album updateAlbum(@RequestParam Long id, @RequestParam (required = false) String author,
+                             @RequestParam(required = false) String name, @RequestParam(required = false) Integer year) {
+        if (id == null) return null;
         Album album = mapHttpRequest(id, name, author, year);
         return musicService.updateAlbum(album);
     }

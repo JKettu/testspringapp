@@ -23,6 +23,6 @@ public class Album implements Serializable {
     @Column(length = 50)
     private String name;
     @Column(length = 4)
-    private int year;
+    private Integer year;
 
 }

@@ -23,9 +23,10 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
-    implementation("io.github.openfeign:feign-core:10.7.4")
     implementation("io.github.openfeign:feign-jackson:10.7.4")
-
+    implementation("org.springframework.cloud:spring-cloud-openfeign-core:2.2.1.RELEASE")
+    implementation ("org.springframework.cloud:spring-cloud-starter-netflix-hystrix:2.2.1.RELEASE")
+    implementation("io.github.openfeign:feign-slf4j:9.3.1")
 }
 
 tasks.withType<Test> {

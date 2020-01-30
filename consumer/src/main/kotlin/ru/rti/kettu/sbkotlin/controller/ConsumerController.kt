@@ -1,34 +1,39 @@
 package ru.rti.kettu.sbkotlin.controller
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.web.bind.annotation.*
+import ru.rti.kettu.sbkotlin.client.DbConnectorClient
 import ru.rti.kettu.sbkotlin.model.Album
 import ru.rti.kettu.sbkotlin.model.Song
 
 @RestController
 @RequestMapping
-class ConsumerController {
+class ConsumerController(@Autowired val client: DbConnectorClient) {
 
-    @GetMapping(path = ["/createAlbum"])
-    fun createAlbum(): String {
-        return ""
+    //Through HTTP
+
+    @PostMapping(path = ["/createAlbum"])
+    fun createAlbum(@RequestBody album: Album): String {
+        return client.createAlbum(album.author, album.name, album.year)
     }
 
-    @GetMapping(path = ["/deleteAlbum"])
-    fun deleteAlbum(id: Long) {
-
+    @PostMapping(path = ["/deleteAlbum"])
+    fun deleteAlbum(@RequestParam id: Long?): Boolean {
+        return client.deleteAlbum(id)
     }
 
     @GetMapping(path = ["/getAlbum"])
-    fun getAlbum(id: Long): List<Album>? {
-        return null
+    fun getAlbum(@RequestParam id: Long?): List<Album?>? {
+        return client.getAllAlbums(id)
     }
 
-    @GetMapping(path = ["/updateAlbum"])
-    fun updateAlbum(): Album? {
-        return null
+    @PostMapping(path = ["/updateAlbum"])
+    fun updateAlbum(@RequestBody album: Album): Album? {
+        return client.updateAlbum(album.id, album.author, album.name, album.year)
     }
+
+    //Through SOAP
 
     @GetMapping(path = ["/createSong"])
     fun createSong(): String {
