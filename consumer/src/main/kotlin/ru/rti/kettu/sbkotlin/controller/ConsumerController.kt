@@ -9,12 +9,10 @@ import ru.rti.kettu.sbkotlin.model.Song
 
 @RestController
 @RequestMapping
-class ConsumerController(@Autowired val client: DbConnectorClient) {
+class ConsumerController(@Autowired @Qualifier (value = "client") val client: DbConnectorClient) {
 
-    //Through HTTP
-
-    @PostMapping(path = ["/createAlbum"])
-    fun createAlbum(@RequestBody album: Album): String {
+    @PostMapping(path = ["/createAlbum"], consumes = ["application/json"])
+    fun createAlbum(@RequestBody album: Album): Album? {
         return client.createAlbum(album.author, album.name, album.year)
     }
 
@@ -24,34 +22,39 @@ class ConsumerController(@Autowired val client: DbConnectorClient) {
     }
 
     @GetMapping(path = ["/getAlbum"])
-    fun getAlbum(@RequestParam id: Long?): List<Album?>? {
+    fun getAlbum(@RequestParam id: Long?): List<Album>? {
         return client.getAllAlbums(id)
     }
 
-    @PostMapping(path = ["/updateAlbum"])
+    @PostMapping(path = ["/updateAlbum"], consumes = ["application/json"])
     fun updateAlbum(@RequestBody album: Album): Album? {
-        return client.updateAlbum(album.id, album.author, album.name, album.year)
+        if (album.id == null) return null
+        return client.updateAlbum(album.id!!, album.author, album.name, album.year)
     }
 
-    //Through SOAP
-
-    @GetMapping(path = ["/createSong"])
-    fun createSong(): String {
-        return ""
+    @PostMapping(path = ["/createSong"], consumes = ["application/json"])
+    fun createSong(@RequestBody song: Song): Song? {
+        return client.createSong(song.name, song.albumId)
     }
 
-    @GetMapping(path = ["/deleteSong"])
-    fun deleteSong() {
-
+    @PostMapping(path = ["/deleteSong"])
+    fun deleteSong(@RequestParam id: String?): Boolean {
+        return client.deleteSong(id)
     }
 
     @GetMapping(path = ["/getSong"])
-    fun getSong(): List<Song>? {
-        return null
+    fun getSong(@RequestParam id: String?, @RequestParam albumId: Long?): List<Song>? {
+        return client.getSong(id, albumId)
     }
 
-    @GetMapping(path = ["/updateSong"])
-    fun updateSong(): Song? {
-        return null
+    @PostMapping(path = ["/updateSong"], consumes = ["application/json"])
+    fun updateSong(@RequestBody song: Song): Song? {
+        if (song.id == null) return null
+        return client.updateSong(song.id!!, song.name, song.albumId)
+    }
+
+    @GetMapping(path = ["/getAllSongs"])
+    fun getAllSongs(): List<Song?>? {
+        return client.getAllSongs()
     }
 }

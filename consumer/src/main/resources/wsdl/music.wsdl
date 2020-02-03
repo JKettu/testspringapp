@@ -1,0 +1,161 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="albumEndpoint"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="albumEndpoint"
+                  targetNamespace="albumEndpoint">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+                   targetNamespace="albumEndpoint">
+            <xs:element name="getAlbumRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getAlbumResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="album" type="tns:album"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="createAlbumRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="name" type="xs:string"/>
+                        <xs:element minOccurs="0" name="author" type="xs:string"/>
+                        <xs:element minOccurs="0" name="year" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="createAlbumResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="album" type="tns:album"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="deleteAlbumRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="deleteAlbumResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="result" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="updateAlbumRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="album" type="tns:album"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="updateAlbumResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="album" type="tns:album"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="album">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="name" type="xs:string"/>
+                    <xs:element minOccurs="0" name="author" type="xs:string"/>
+                    <xs:element minOccurs="0" name="year" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="createAlbumResponse">
+        <wsdl:part element="tns:createAlbumResponse" name="createAlbumResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getAlbumRequest">
+        <wsdl:part element="tns:getAlbumRequest" name="getAlbumRequest"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createAlbumRequest">
+        <wsdl:part element="tns:createAlbumRequest" name="createAlbumRequest"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deleteAlbumRequest">
+        <wsdl:part element="tns:deleteAlbumRequest" name="deleteAlbumRequest"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateAlbumRequest">
+        <wsdl:part element="tns:updateAlbumRequest" name="updateAlbumRequest"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateAlbumResponse">
+        <wsdl:part element="tns:updateAlbumResponse" name="updateAlbumResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getAlbumResponse">
+        <wsdl:part element="tns:getAlbumResponse" name="getAlbumResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deleteAlbumResponse">
+        <wsdl:part element="tns:deleteAlbumResponse" name="deleteAlbumResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="MusicWebService">
+        <wsdl:operation name="createAlbum">
+            <wsdl:input message="tns:createAlbumRequest" name="createAlbumRequest"></wsdl:input>
+            <wsdl:output message="tns:createAlbumResponse" name="createAlbumResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getAlbum">
+            <wsdl:input message="tns:getAlbumRequest" name="getAlbumRequest"></wsdl:input>
+            <wsdl:output message="tns:getAlbumResponse" name="getAlbumResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteAlbum">
+            <wsdl:input message="tns:deleteAlbumRequest" name="deleteAlbumRequest"></wsdl:input>
+            <wsdl:output message="tns:deleteAlbumResponse" name="deleteAlbumResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="updateAlbum">
+            <wsdl:input message="tns:updateAlbumRequest" name="updateAlbumRequest"></wsdl:input>
+            <wsdl:output message="tns:updateAlbumResponse" name="updateAlbumResponse"></wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="MusicWebServiceSoap11" type="tns:MusicWebService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="createAlbum">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="createAlbumRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="createAlbumResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getAlbum">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="getAlbumRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getAlbumResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteAlbum">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="deleteAlbumRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="deleteAlbumResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="updateAlbum">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="updateAlbumRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="updateAlbumResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="MusicWebServiceService">
+        <wsdl:port binding="tns:MusicWebServiceSoap11" name="MusicWebServiceSoap11">
+            <soap:address location="http://localhost:1001/ws"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

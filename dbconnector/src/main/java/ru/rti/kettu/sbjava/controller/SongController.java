@@ -1,6 +1,6 @@
 package ru.rti.kettu.sbjava.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.rti.kettu.sbjava.model.db.mongoDb.Song;
@@ -21,20 +21,21 @@ public class SongController {
         this.musicService = musicService;
     }
 
-    @GetMapping(path = "/createSong")
-    public String createSong(String name, Long albumId) {
+    @PostMapping(path = "/createSong")
+    public Song createSong(String name, Long albumId) {
         Song song = musicService.createSongInfo(name, albumId);
-        return isEmpty(song) ? "Couldn't create song"
-                : "New song was created with id: " + song.getId();
+        return isEmpty(song) ? null
+                : musicService.getSongById(song.getId());
     }
 
-    @GetMapping(path = "/deleteSong")
-    public void deleteSong(String id) {
+    @PostMapping(path = "/deleteSong")
+    public boolean deleteSong(String id) {
         if (!isEmpty(id))
-            musicService.deleteSongInfo(id);
+            return musicService.deleteSongInfo(id);
+        else return musicService.deleteAllSongs();
     }
 
-    @GetMapping(path = "/getSong")
+    @PostMapping(path = "/getSong")
     public List<Song> getSong(String id, Long albumId) {
         if (!isEmpty(id))
             return Arrays.asList(musicService.getSongById(id));
@@ -43,12 +44,12 @@ public class SongController {
         return null;
     }
 
-    @GetMapping(path = "/getAllSongs")
+    @PostMapping(path = "/getAllSongs")
     public List<Song> getAllSongs() {
         return musicService.getAllSongs();
     }
 
-    @GetMapping(path = "/updateSong")
+    @PostMapping(path = "/updateSong")
     public Song updateSong(String id, String name, Long albumId) {
         if (isEmpty(id)) return null;
         return musicService.updateSong(id, name, albumId);

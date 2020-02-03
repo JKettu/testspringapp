@@ -27,6 +27,12 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-openfeign-core:2.2.1.RELEASE")
     implementation ("org.springframework.cloud:spring-cloud-starter-netflix-hystrix:2.2.1.RELEASE")
     implementation("io.github.openfeign:feign-slf4j:9.3.1")
+    implementation("org.springframework.integration:spring-integration-core:4.0.4.RELEASE")
+    implementation("wsdl4j:wsdl4j:1.6.1")
+    implementation("io.github.openfeign:feign-soap:10.7.4")
+    implementation("org.projectlombok:lombok:1.18.10")
+
+
 }
 
 tasks.withType<Test> {
@@ -39,3 +45,6 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "1.8"
     }
 }
+
+apply(from = "task.gradle")
+//apply(from = "importToMaven.gradle")

@@ -67,6 +67,7 @@ public class MusicService {
     public Album updateAlbum(Album album) {
         if (album == null || album.getId() == null) return null;
         Album albumToUpdate = getAlbumById(album.getId());
+        if(albumToUpdate == null) return null;
         if (isNotEmpty(album.getName()))
             albumToUpdate.setName(album.getName());
         if (isNotEmpty(album.getAuthor()))
@@ -85,8 +86,23 @@ public class MusicService {
     }
 
     @Transactional
-    public void deleteSongInfo(String id) {
-        songRepository.deleteById(id);
+    public boolean deleteSongInfo(String id) {
+        try {
+            songRepository.deleteById(id);
+            return true;
+        } catch (RuntimeException exception) {
+            return false;
+        }
+    }
+
+    @Transactional
+    public boolean deleteAllSongs() {
+        try {
+            songRepository.deleteAll();
+            return true;
+        } catch (RuntimeException exception) {
+            return false;
+        }
     }
 
     @Transactional

@@ -1,4 +1,15 @@
 package ru.rti.kettu.sbkotlin.model
 
-data class Album (val id: Long?, var author: String?, val name: String?, var year: Int? = 0) {
+class Album constructor() {
+    var id: Long? = null
+    var author: String? = null
+    var name: String? = null
+    var year: Int? = null
+
+    constructor(id: Long?, author: String?, name: String?, year: Int? = 0) : this() {
+        this.id = id
+        this.author = author
+        this.name = name
+        this.year = year
+    }
 }
