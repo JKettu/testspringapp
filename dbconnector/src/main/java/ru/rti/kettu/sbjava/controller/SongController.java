@@ -15,7 +15,7 @@ import static org.springframework.util.StringUtils.isEmpty;
 @RequestMapping(path = "/song")
 public class SongController {
 
-    final MusicService musicService;
+    private final MusicService musicService;
 
     public SongController(MusicService musicService) {
         this.musicService = musicService;

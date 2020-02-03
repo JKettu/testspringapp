@@ -14,7 +14,7 @@ import static ru.rti.kettu.sbjava.mapping.http.AlbumHttpMapping.mapHttpRequest;
 @RequestMapping(path = "/album")
 public class AlbumController {
 
-    final MusicService musicService;
+    private final MusicService musicService;
 
     public AlbumController(MusicService musicService) {
         this.musicService = musicService;

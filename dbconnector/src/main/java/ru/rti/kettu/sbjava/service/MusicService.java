@@ -15,8 +15,8 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 @Service
 public class MusicService {
 
-    final AlbumRepository albumRepository;
-    final SongRepository songRepository;
+    private final AlbumRepository albumRepository;
+    private final SongRepository songRepository;
 
     public MusicService(AlbumRepository albumRepository, SongRepository songRepository) {
         this.albumRepository = albumRepository;

@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public class AlbumRepository {
 
-    final SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     public AlbumRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;

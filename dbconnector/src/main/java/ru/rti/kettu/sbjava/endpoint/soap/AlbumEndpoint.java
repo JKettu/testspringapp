@@ -20,7 +20,7 @@ import static ru.rti.kettu.sbjava.mapping.soap.AlbumSoapMapping.mapSoapResponse;
 public class AlbumEndpoint {
     private static final String NAMESPACE_URI = "albumEndpoint";
 
-    final MusicService musicService;
+    private final MusicService musicService;
 
     public AlbumEndpoint(MusicService musicService) {
         this.musicService = musicService;
