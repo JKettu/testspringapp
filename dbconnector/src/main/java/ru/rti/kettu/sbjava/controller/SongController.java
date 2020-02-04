@@ -24,8 +24,7 @@ public class SongController {
     @PostMapping(path = "/createSong")
     public Song createSong(String name, Long albumId) {
         Song song = musicService.createSongInfo(name, albumId);
-        return isEmpty(song) ? null
-                : musicService.getSongById(song.getId());
+        return isEmpty(song) ? null : song;
     }
 
     @PostMapping(path = "/deleteSong")

@@ -31,8 +31,7 @@ dependencies {
     implementation("wsdl4j:wsdl4j:1.6.1")
     implementation("io.github.openfeign:feign-soap:10.7.4")
     implementation("org.projectlombok:lombok:1.18.10")
-
-
+    testImplementation("org.mockito:mockito-inline:2.8.47")
 }
 
 tasks.withType<Test> {
@@ -47,4 +46,3 @@ tasks.withType<KotlinCompile> {
 }
 
 apply(from = "task.gradle")
-//apply(from = "importToMaven.gradle")

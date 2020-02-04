@@ -26,9 +26,6 @@ public class MusicService {
     @Transactional
     public String createAlbumInfo(Album album) {
         if (album == null) return "";
-        album.setAuthor(album.getAuthor());
-        album.setName(album.getName());
-        album.setYear(album.getYear());
         return albumRepository.createAlbum(album);
     }
 

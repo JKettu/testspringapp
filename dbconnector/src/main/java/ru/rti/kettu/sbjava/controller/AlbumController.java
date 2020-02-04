@@ -25,7 +25,12 @@ public class AlbumController {
                               @RequestParam(required = false) String name, @RequestParam(required = false) Integer year) {
         Album album = mapHttpRequest(null, name, author , year);
         String id = musicService.createAlbumInfo(album);
-        return isEmpty(id) ? null : musicService.getAlbumById(Long.parseLong(id));
+        return isEmpty(id) ? null : Album.builder()
+                .id(Long.parseLong(id))
+                .author(author)
+                .name(name)
+                .year(year)
+                .build();
     }
 
     @PostMapping(path = "/deleteAlbum")
