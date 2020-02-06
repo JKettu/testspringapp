@@ -1,6 +1,8 @@
-package ru.rti.kettu.sbkotlin.model
+package ru.rti.kettu.dbconnectorapi.model
 
-class Album constructor() {
+import java.io.Serializable
+
+class AlbumApi constructor(): Serializable {
     var id: Long? = null
     var author: String? = null
     var name: String? = null

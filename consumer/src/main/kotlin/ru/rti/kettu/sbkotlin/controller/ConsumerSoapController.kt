@@ -1,18 +1,17 @@
 package ru.rti.kettu.sbkotlin.controller
 
 import albumendpoint.*
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.web.bind.annotation.*
+import ru.rti.kettu.dbconnectorapi.model.AlbumApi
 import ru.rti.kettu.sbkotlin.client.DbConnectorSoapClient
-import ru.rti.kettu.sbkotlin.model.Album
 
 @RestController
 @RequestMapping(path = ["/soap"])
-class ConsumerSoapController (@Autowired @Qualifier(value = "soapClient")  val soapClient: DbConnectorSoapClient) {
+class ConsumerSoapController (@Qualifier(value = "soapClient")  val soapClient: DbConnectorSoapClient) {
 
     @PostMapping(path = ["/createAlbum"])
-    fun createAlbum(@RequestBody album: Album): CreateAlbumResponse? {
+    fun createAlbum(@RequestBody album: AlbumApi): CreateAlbumResponse? {
         val req = CreateAlbumRequest()
         req.author = album.author
         req.name = album.name
@@ -21,7 +20,7 @@ class ConsumerSoapController (@Autowired @Qualifier(value = "soapClient")  val s
     }
 
     @PostMapping(path = ["/updateAlbum"])
-    fun updateAlbum(@RequestBody album: Album): UpdateAlbumResponse? {
+    fun updateAlbum(@RequestBody album: AlbumApi): UpdateAlbumResponse? {
         if (album.id == null) return null
         val req = UpdateAlbumRequest()
         req.album = albumendpoint.Album()

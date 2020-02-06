@@ -32,6 +32,8 @@ dependencies {
     implementation("io.github.openfeign:feign-soap:10.7.4")
     implementation("org.projectlombok:lombok:1.18.10")
     testImplementation("org.mockito:mockito-inline:2.8.47")
+    implementation("org.springframework.amqp:spring-rabbit:2.2.3.RELEASE")
+    implementation(files("C:\\testspringapp\\dbconnector-api\\target\\dbconnnector-api-0.0.1-SNAPSHOT.jar"))
 }
 
 tasks.withType<Test> {

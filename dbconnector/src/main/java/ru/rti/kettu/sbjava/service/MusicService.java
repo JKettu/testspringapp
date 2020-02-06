@@ -75,10 +75,7 @@ public class MusicService {
     }
 
     @Transactional
-    public Song createSongInfo(String name, Long albumId) {
-        Song song = new Song();
-        song.setName(name);
-        song.setAlbumId(albumId);
+    public Song createSongInfo(Song song) {
         return songRepository.save(song);
     }
 
@@ -118,13 +115,14 @@ public class MusicService {
     }
 
     @Transactional
-    public Song updateSong(String id, String name, Long albumId) {
-        Song song = songRepository.findById(id).orElse(null);
-        if (song == null) return null;
-        if (isNotEmpty(name))
-            song.setName(name);
-        if (!isEmpty(albumId))
-            song.setAlbumId(albumId);
+    public Song updateSong(Song song) {
+        if (song == null || song.getId() == null) return null;
+        Song songToUpdate = songRepository.findById(song.getId()).orElse(null);
+        if (songToUpdate == null) return null;
+        if (isNotEmpty(songToUpdate.getName()))
+            song.setName(songToUpdate.getName());
+        if (!isEmpty(songToUpdate.getAlbumId()))
+            song.setAlbumId(songToUpdate.getAlbumId());
         return songRepository.save(song);
     }
 }

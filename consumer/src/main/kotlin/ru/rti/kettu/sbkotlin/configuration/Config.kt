@@ -1,4 +1,4 @@
-package ru.rti.kettu.sbkotlin
+package ru.rti.kettu.sbkotlin.configuration
 
 import feign.Feign
 import feign.codec.Decoder

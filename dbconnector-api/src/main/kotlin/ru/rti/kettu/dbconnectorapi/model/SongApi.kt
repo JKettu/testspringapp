@@ -1,6 +1,9 @@
-package ru.rti.kettu.sbkotlin.model
+package ru.rti.kettu.dbconnectorapi.model
 
-class Song constructor() {
+import java.io.Serializable
+
+
+class SongApi constructor(): Serializable {
     var id: String? = null
     var name: String? = null
     var albumId: Long? = null

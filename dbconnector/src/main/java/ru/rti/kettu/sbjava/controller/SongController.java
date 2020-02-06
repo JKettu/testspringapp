@@ -23,8 +23,12 @@ public class SongController {
 
     @PostMapping(path = "/createSong")
     public Song createSong(String name, Long albumId) {
-        Song song = musicService.createSongInfo(name, albumId);
-        return isEmpty(song) ? null : song;
+        Song song = Song.builder()
+                .name(name)
+                .albumId(albumId)
+                .build();
+        Song newSong = musicService.createSongInfo(song);
+        return isEmpty(newSong) ? null : newSong;
     }
 
     @PostMapping(path = "/deleteSong")
@@ -51,6 +55,11 @@ public class SongController {
     @PostMapping(path = "/updateSong")
     public Song updateSong(String id, String name, Long albumId) {
         if (isEmpty(id)) return null;
-        return musicService.updateSong(id, name, albumId);
+        Song song = Song.builder()
+                .id(id)
+                .name(name)
+                .albumId(albumId)
+                .build();
+        return musicService.updateSong(song);
     }
 }
