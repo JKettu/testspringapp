@@ -26,10 +26,9 @@ public class RabbitMqListener {
 
     @RabbitListener(queues = "albumQueue")
     public OperationAlbumApiResponse getAlbumQueueObject(OperationAlbumApi albumApi) {
-        if (albumApi == null || albumApi.getOperation() == null) return null;
+        if (albumApi == null) return null;
         Album album = getDbModelAlbum(albumApi.getAlbum());
         try {
-
             if (albumApi.getOperation().equals(AlbumOperations.CREATE)) {
                 OperationAlbumApiResponse response = new OperationAlbumApiResponse(AlbumOperations.CREATE);
                 String id = musicService.createAlbumInfo(album);
@@ -70,33 +69,37 @@ public class RabbitMqListener {
     public OperationSongApiResponse getSongQueueObject(OperationSongApi songApi) {
         if (songApi == null || songApi.getOperation() == null) return null;
         Song song = getDbModelSong(songApi.getSong());
-        if (songApi.getOperation().equals(SongOperations.CREATE)) {
-            OperationSongApiResponse response = new OperationSongApiResponse(SongOperations.CREATE);
-            response.setSong(getApiModelSong(musicService.createSongInfo(song)));
-            return response;
-        }
+        try {
+            if (songApi.getOperation().equals(SongOperations.CREATE)) {
+                OperationSongApiResponse response = new OperationSongApiResponse(SongOperations.CREATE);
+                response.setSong(getApiModelSong(musicService.createSongInfo(song)));
+                return response;
+            }
 
-        if (songApi.getOperation().equals(SongOperations.UPDATE)) {
-            OperationSongApiResponse response = new OperationSongApiResponse(SongOperations.CREATE);
-            response.setSong(getApiModelSong(musicService.updateSong(song)));
-            return response;
-        }
+            if (songApi.getOperation().equals(SongOperations.UPDATE)) {
+                OperationSongApiResponse response = new OperationSongApiResponse(SongOperations.CREATE);
+                response.setSong(getApiModelSong(musicService.updateSong(song)));
+                return response;
+            }
 
-        if (songApi.getOperation().equals(SongOperations.DELETE)) {
-            OperationSongApiResponse response = new OperationSongApiResponse(SongOperations.DELETE);
-            if (song.getId() == null)
-                response.setDeleted(musicService.deleteAllSongs());
-            else response.setDeleted(musicService.deleteSongInfo(song.getId()));
-            return response;
-        }
-        if (songApi.getOperation().equals(SongOperations.GET)) {
-            OperationSongApiResponse response = new OperationSongApiResponse(SongOperations.GET);
-            if (song.getId() != null)
-                response.setSong(getApiModelSong(musicService.getSongById(song.getId())));
-            else if (song.getAlbumId() != null)
-                response.setSongList(getApiModelSongList(musicService.getSongsByAlbum(song.getAlbumId())));
-            else response.setSongList(getApiModelSongList(musicService.getAllSongs()));
-            return response;
+            if (songApi.getOperation().equals(SongOperations.DELETE)) {
+                OperationSongApiResponse response = new OperationSongApiResponse(SongOperations.DELETE);
+                if (song.getId() == null)
+                    response.setDeleted(musicService.deleteAllSongs());
+                else response.setDeleted(musicService.deleteSongInfo(song.getId()));
+                return response;
+            }
+            if (songApi.getOperation().equals(SongOperations.GET)) {
+                OperationSongApiResponse response = new OperationSongApiResponse(SongOperations.GET);
+                if (song.getId() != null)
+                    response.setSong(getApiModelSong(musicService.getSongById(song.getId())));
+                else if (song.getAlbumId() != null)
+                    response.setSongList(getApiModelSongList(musicService.getSongsByAlbum(song.getAlbumId())));
+                else response.setSongList(getApiModelSongList(musicService.getAllSongs()));
+                return response;
+            }
+        } catch (Exception e) {
+            return null;
         }
         return null;
     }
