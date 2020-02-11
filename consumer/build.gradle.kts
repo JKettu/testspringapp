@@ -34,6 +34,8 @@ dependencies {
     testImplementation("org.mockito:mockito-inline:2.8.47")
     implementation("org.springframework.amqp:spring-rabbit:2.2.3.RELEASE")
     implementation(files("C:\\testspringapp\\dbconnector-api\\target\\dbconnnector-api-0.0.1-SNAPSHOT.jar"))
+    implementation("org.springframework.kafka:spring-kafka:2.4.1.RELEASE")
+
 }
 
 tasks.withType<Test> {

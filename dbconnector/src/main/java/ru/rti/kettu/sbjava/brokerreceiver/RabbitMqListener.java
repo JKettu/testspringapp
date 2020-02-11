@@ -1,4 +1,4 @@
-package ru.rti.kettu.sbjava.rabbitmqreceiver;
+package ru.rti.kettu.sbjava.brokerreceiver;
 
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
