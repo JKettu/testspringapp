@@ -1211,3 +1211,7 @@ Wrong user name or password [28000-200]
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "INFORMATION_SCHEMA[*].INDEXES INFORMATION_SCHEMA.INDEXES"; ожидалось "INSERT"
 Syntax error in SQL statement "INFORMATION_SCHEMA[*].INDEXES INFORMATION_SCHEMA.INDEXES"; expected "INSERT"; SQL statement:
 INFORMATION_SCHEMA.INDEXES INFORMATION_SCHEMA.INDEXES [42001-200]
+2020-02-12 13:07:34 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLDataException: Значение слишком длинное для поля "year VARCHAR(4)": "'1118736' (7)"
+Value too long for column "year VARCHAR(4)": "'1118736' (7)"; SQL statement:
+insert into Album (author, name, year, id) values (?, ?, ?, ?) [22001-200]

@@ -1,18 +1,14 @@
 package ru.rti.kettu.sbjava.config;
 
-import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.IntegerDeserializer;
-import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
-import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.support.converter.BatchMessagingMessageConverter;
-import org.springframework.kafka.support.converter.StringJsonMessageConverter;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import ru.rti.kettu.dbconnectorapi.model.OperationAlbumApi;
 import ru.rti.kettu.dbconnectorapi.model.OperationSongApi;
@@ -22,6 +18,7 @@ import java.util.Map;
 
 import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
 
+@EnableKafka
 @Configuration
 public class KafkaConfig {
 
@@ -32,22 +29,20 @@ public class KafkaConfig {
     private String kafkaGroupId;
 
     @Bean
-    public KafkaListenerContainerFactory<?> albumBatchFactory() {
+    public ConcurrentKafkaListenerContainerFactory<Integer, OperationAlbumApi> albumBatchFactory() {
         ConcurrentKafkaListenerContainerFactory<Integer, OperationAlbumApi> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(albumConsumerFactory());
         factory.setBatchListener(true);
-        factory.setMessageConverter(new BatchMessagingMessageConverter(converter()));
         return factory;
     }
 
     @Bean
-    public KafkaListenerContainerFactory<?> albumSingleFactory() {
+    public ConcurrentKafkaListenerContainerFactory<Integer, OperationAlbumApi> albumSingleFactory() {
         ConcurrentKafkaListenerContainerFactory<Integer, OperationAlbumApi> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(albumConsumerFactory());
         factory.setBatchListener(false);
-        factory.setMessageConverter(converter());
         return factory;
     }
 
@@ -62,7 +57,7 @@ public class KafkaConfig {
     }
 
     @Bean
-    public KafkaListenerContainerFactory<?> kafkaListenerContainerFactory() {
+    public ConcurrentKafkaListenerContainerFactory<Integer, OperationAlbumApi> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<Integer, OperationAlbumApi> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(albumConsumerFactory());
         return factory;
@@ -78,16 +73,11 @@ public class KafkaConfig {
     }
 
     @Bean
-    public Deserializer albumJsonDeserializer() {
-        JsonDeserializer<OperationAlbumApi> deserializer = new JsonDeserializer<>(OperationAlbumApi.class, false);
+    public Deserializer<OperationAlbumApi> albumJsonDeserializer() {
+        JsonDeserializer<OperationAlbumApi> deserializer = new JsonDeserializer<>(OperationAlbumApi.class);
         deserializer.setRemoveTypeHeaders(false);
         deserializer.addTrustedPackages("*");
         deserializer.setUseTypeMapperForKey(true);
         return deserializer;
-    }
-
-    @Bean
-    public StringJsonMessageConverter converter() {
-        return new StringJsonMessageConverter();
     }
 }

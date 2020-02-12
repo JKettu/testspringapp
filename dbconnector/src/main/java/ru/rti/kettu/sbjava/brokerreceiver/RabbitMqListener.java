@@ -1,12 +1,14 @@
 package ru.rti.kettu.sbjava.brokerreceiver;
 
-import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import ru.rti.kettu.dbconnectorapi.constants.AlbumOperations;
 import ru.rti.kettu.dbconnectorapi.constants.SongOperations;
-import ru.rti.kettu.dbconnectorapi.model.*;
+import ru.rti.kettu.dbconnectorapi.model.OperationAlbumApi;
+import ru.rti.kettu.dbconnectorapi.model.OperationAlbumApiResponse;
+import ru.rti.kettu.dbconnectorapi.model.OperationSongApi;
+import ru.rti.kettu.dbconnectorapi.model.OperationSongApiResponse;
 import ru.rti.kettu.sbjava.model.db.h2.Album;
 import ru.rti.kettu.sbjava.model.db.mongoDb.Song;
 import ru.rti.kettu.sbjava.service.MusicService;
@@ -14,7 +16,6 @@ import ru.rti.kettu.sbjava.service.MusicService;
 import static ru.rti.kettu.sbjava.mapping.moduleintegration.AlbumToDbAlbumMapping.*;
 import static ru.rti.kettu.sbjava.mapping.moduleintegration.SongToDbSongMapping.*;
 
-@EnableRabbit
 @Component
 public class RabbitMqListener {
 
