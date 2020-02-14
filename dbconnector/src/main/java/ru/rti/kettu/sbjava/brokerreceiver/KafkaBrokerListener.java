@@ -23,7 +23,7 @@ public class KafkaBrokerListener {
         this.musicService = musicService;
     }
 
-    @KafkaListener(id = "consumer", topics = {"album"}, topicPartitions = { @TopicPartition(topic = "album", partitions = {"0"}) }, containerFactory = "albumSingleFactory")
+    @KafkaListener(id = "consumer", topics = {"album"}, topicPartitions = { @TopicPartition(topic = "album", partitions = {"0"}) }, containerFactory = "kafkaListenerContainerFactory")
     @SendTo (value = "albumReply")
     public OperationAlbumApiResponse consume(OperationAlbumApi albumApi) {
         if (albumApi == null) return null;

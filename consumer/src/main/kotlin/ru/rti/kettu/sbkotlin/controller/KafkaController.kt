@@ -12,7 +12,7 @@ class KafkaController (@Autowired val service: KafkaService) {
 
     @RequestMapping("/sendToAlbumTopicCreate")
     fun sendMessageToAlbumQueueCreate(@RequestBody album: AlbumApi): AlbumApi? {
-        val response = service.createSong(album)
+        val response = service.createAlbum(album)
         return response?.album
     }
 }

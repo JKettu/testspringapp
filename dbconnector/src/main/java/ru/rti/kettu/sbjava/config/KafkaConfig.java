@@ -61,7 +61,7 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<Integer, OperationAlbumApi> albumSingleFactory() {
+    public ConcurrentKafkaListenerContainerFactory<Integer, OperationAlbumApi> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<Integer, OperationAlbumApi> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(albumConsumerFactory());

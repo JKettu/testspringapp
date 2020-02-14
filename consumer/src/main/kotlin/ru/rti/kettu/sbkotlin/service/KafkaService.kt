@@ -2,31 +2,19 @@ package ru.rti.kettu.sbkotlin.service
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.clients.producer.ProducerRecord
-import org.apache.kafka.common.header.internals.RecordHeader
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.ResponseEntity
-import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.kafka.requestreply.ReplyingKafkaTemplate
-import org.springframework.kafka.requestreply.RequestReplyFuture
-import org.springframework.kafka.support.KafkaHeaders
-import org.springframework.kafka.support.SendResult
 import org.springframework.stereotype.Service
 import org.springframework.util.concurrent.ListenableFutureCallback
-import org.springframework.web.context.request.async.DeferredResult
 import ru.rti.kettu.dbconnectorapi.constants.AlbumOperations
 import ru.rti.kettu.dbconnectorapi.model.AlbumApi
 import ru.rti.kettu.dbconnectorapi.model.OperationAlbumApi
 import ru.rti.kettu.dbconnectorapi.model.OperationAlbumApiResponse
-import ru.rti.kettu.sbkotlin.controller.ConsumerController
-import java.util.concurrent.CompletableFuture
-import java.util.concurrent.TimeUnit
-
 
 @Service
-class KafkaService (@Autowired val tmpl: ReplyingKafkaTemplate<Int, OperationAlbumApi, OperationAlbumApiResponse>, @Autowired val controller: ConsumerController) {
+class KafkaService (@Autowired val tmpl: ReplyingKafkaTemplate<Int, OperationAlbumApi, OperationAlbumApiResponse>) {
 
-
-    fun createSong(album: AlbumApi): OperationAlbumApiResponse? {
+    fun createAlbum(album: AlbumApi): OperationAlbumApiResponse? {
         val message = OperationAlbumApi(AlbumOperations.CREATE, album)
         /*tmpl.send("album",0, 0, message).get(20, TimeUnit.SECONDS)
         val albumList = controller.getAlbum(null)
