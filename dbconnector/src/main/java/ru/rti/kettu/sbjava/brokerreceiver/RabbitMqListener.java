@@ -29,6 +29,7 @@ public class RabbitMqListener {
     public OperationAlbumApiResponse getAlbumQueueObject(OperationAlbumApi albumApi) {
         if (albumApi == null) return null;
         Album album = getDbModelAlbum(albumApi.getAlbum());
+        if (album == null) return null;
         try {
             if (albumApi.getOperation().equals(AlbumOperations.CREATE)) {
                 OperationAlbumApiResponse response = new OperationAlbumApiResponse(AlbumOperations.CREATE);
